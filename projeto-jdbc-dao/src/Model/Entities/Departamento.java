@@ -1,4 +1,4 @@
-package Negocio.Entidades;
+package Model.Entities;
 
 import java.io.Serializable;
 import java.util.Objects;
