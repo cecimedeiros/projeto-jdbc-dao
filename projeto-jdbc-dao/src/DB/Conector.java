@@ -2,7 +2,8 @@ package DB;
 import java.sql.*;
 
 public class Conector {
-    Connection connection = null;
+    public static Connection connection = null;
+
     public void conectar(){
         if (connection == null) {
             try {

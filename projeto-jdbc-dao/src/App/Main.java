@@ -1,18 +1,25 @@
 package App;
 
-import Model.Entities.Departamento;
+import DB.DbException;
+import Model.DAO.DAOFactory;
+import Model.DAO.VendedorDAO;
 import Model.Entities.Vendedor;
 
-import java.util.Date;
+import java.util.List;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws DbException {
 
-        Departamento obj = new Departamento(1, "Livros");
-        Vendedor v = new Vendedor(21, "bob", "bob@gmail.com", new Date(), 3000.0, obj);
+        VendedorDAO vDAO = DAOFactory.createVendedorDAO();
+        Vendedor v = vDAO.findById(3);
 
-        System.out.println(obj);
         System.out.println(v);
+
+        List<Vendedor> lista = vDAO.findAll();
+
+        for (Vendedor vd : lista) {
+            System.out.println(vd);
+        }
 
     }
 }

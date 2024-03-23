@@ -1,5 +1,6 @@
 package Model.DAO;
 
+import DB.DbException;
 import Model.Entities.Departamento;
 import Model.Entities.Vendedor;
 
@@ -10,7 +11,8 @@ public interface VendedorDAO {
     void insert(Vendedor obj);
     void update(Vendedor obj);
     void deleteById(Integer id);
-    Vendedor findById(Integer id);
-    List<Vendedor> findAll();
+    Vendedor findById(Integer id) throws DbException;
+    List<Vendedor> findAll() throws DbException;
+    List<Vendedor> findByDepartamento(Departamento dp) throws DbException;
 
 }
