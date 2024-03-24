@@ -23,13 +23,13 @@ public class Main {
             System.out.println(vd);
         }
 
-        System.out.println("\n== TESTANDO INSERÇÃO ==\n");
-        Departamento dp = new Departamento(2, null); //departamento nem precisa ter nome já que é só pra esse teste e fds
-        //eu fui tentar fazer gracinha nessa linha 27 (coloquei um id 69) e descobri que só permite colocar departamento que existakkk
-        Vendedor novoVendedor = new Vendedor(null, "Lori Delicia", "loridelicia@emailceta.com", new Date(), 9000.0, dp);
-        //id tem que ser nulo pois o próprio insert já cria essa desgraça; ali ta new Date pq to com preguiça de criar data
-        vDAO.insert(novoVendedor);
-        System.out.println("Botada realizada! Novo ID: " + novoVendedor.getId());
+        System.out.println("\n== TESTANDO UPDATE ==\n");
+        Vendedor vendUp = vDAO.findById(8);
+        vendUp.setName("Cecil");
+        vDAO.update(vendUp);
+        //isso msm, quando for dar um set precisa fazer update pra "refazer" os dados la na tabela
+        //é assim que se usa esta porra de método
+        System.out.println("Update updatado!");
 
     }
 }

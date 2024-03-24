@@ -9,7 +9,7 @@ import java.util.List;
 public interface VendedorDAO {
 
     void insert(Vendedor obj) throws DbException;
-    void update(Vendedor obj);
+    void update(Vendedor obj) throws DbException;
     void deleteById(Integer id);
     Vendedor findById(Integer id) throws DbException;
     List<Vendedor> findAll() throws DbException;

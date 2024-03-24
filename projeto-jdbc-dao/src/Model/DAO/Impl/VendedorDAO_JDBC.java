@@ -41,6 +41,8 @@ public class VendedorDAO_JDBC implements VendedorDAO {
             st.setDate(3, new java.sql.Date(obj.getDataDeNascimento().getTime()));
             st.setDouble(4, obj.getSalario());
             st.setInt(5, obj.getDepartamento().getId());
+            //aqui não é posto o ID, pois não é o user que define, mas sim a sequencia
+            //abaixo está como se faz isso
 
             int rows = st.executeUpdate();
 
@@ -64,7 +66,31 @@ public class VendedorDAO_JDBC implements VendedorDAO {
     }
 
     @Override
-    public void update(Vendedor obj) {
+    public void update(Vendedor obj) throws DbException {
+
+        PreparedStatement st = null;
+
+        try{
+            st = c.connection.prepareStatement(
+                    "UPDATE seller "
+                    + "SET Name = ?, Email = ?, BirthDate = ?, BaseSalary = ?, DepartmentId = ? "
+                    + "WHERE Id = ?"
+            );
+
+            st.setString(1, obj.getName());
+            st.setString(2, obj.getEmail());
+            st.setDate(3, new java.sql.Date(obj.getDataDeNascimento().getTime()));
+            st.setDouble(4, obj.getSalario());
+            st.setInt(5, obj.getDepartamento().getId());
+            st.setInt(6, obj.getId());
+
+            st.executeUpdate();
+
+        } catch (SQLException e){
+            throw new DbException(e.getMessage());
+        } finally {
+            c.fecharStatement(st);
+        }
 
     }
 
