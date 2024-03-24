@@ -9,6 +9,7 @@ import Model.Entities.Vendedor;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +24,42 @@ public class VendedorDAO_JDBC implements VendedorDAO {
     }
 
     @Override
-    public void insert(Vendedor obj) {
+    public void insert(Vendedor obj) throws DbException {
+
+        PreparedStatement st = null;
+
+        try{
+            st = c.connection.prepareStatement(
+                    "INSERT INTO seller "
+                    + "(Name, Email, BirthDate, BaseSalary, DepartmentId) "
+                    + "VALUES "
+                    + "(?, ?, ?, ?, ?)",
+                    Statement.RETURN_GENERATED_KEYS);
+
+            st.setString(1, obj.getName());
+            st.setString(2, obj.getEmail());
+            st.setDate(3, new java.sql.Date(obj.getDataDeNascimento().getTime()));
+            st.setDouble(4, obj.getSalario());
+            st.setInt(5, obj.getDepartamento().getId());
+
+            int rows = st.executeUpdate();
+
+            if (rows > 0){
+                ResultSet rs = st.getGeneratedKeys();
+                if(rs.next()){
+                    int id = rs.getInt(1); //pq 1? pq o id fica na 1ª coluna das chaves(generatedkeys)
+                    obj.setId(id); //para que o objeto fique populado com o novo id dele
+                }
+                c.fecharResultSet(rs);
+            } else {
+                throw new DbException("Erro inesperado! Nenhuma linha foi afetada!");
+            }
+
+        } catch (SQLException e){
+            throw new DbException(e.getMessage());
+        } finally {
+            c.fecharStatement(st);
+        }
 
     }
 
