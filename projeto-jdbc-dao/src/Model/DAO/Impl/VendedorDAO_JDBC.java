@@ -95,7 +95,25 @@ public class VendedorDAO_JDBC implements VendedorDAO {
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public void deleteById(Integer id) throws DbException {
+
+        PreparedStatement st = null;
+
+        try{
+
+            st = c.connection.prepareStatement("DELETE FROM seller WHERE Id = ?");
+            st.setInt(1, id);
+            st.executeUpdate();
+
+            //e se eu colocar um id que não existe? simplesmente não dá em nada.
+            //mas se quiser impedir que isso ocorra é só fazer aquele esquema com o row
+            //if row == 0 e colocar uma exceção no escopo, prontin
+
+        } catch (SQLException e){
+            throw new DbException(e.getMessage());
+        } finally {
+            c.fecharStatement(st);
+        }
 
     }
 

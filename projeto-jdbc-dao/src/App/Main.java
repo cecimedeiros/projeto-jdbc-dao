@@ -23,13 +23,8 @@ public class Main {
             System.out.println(vd);
         }
 
-        System.out.println("\n== TESTANDO UPDATE ==\n");
-        Vendedor vendUp = vDAO.findById(8);
-        vendUp.setName("Cecil");
-        vDAO.update(vendUp);
-        //isso msm, quando for dar um set precisa fazer update pra "refazer" os dados la na tabela
-        //é assim que se usa esta porra de método
-        System.out.println("Update updatado!");
+        System.out.println("\n== TESTANDO DELETE ==\n");
+        vDAO.deleteById(7);
 
     }
 }
