@@ -119,6 +119,7 @@ public class VendedorDAO_JDBC implements VendedorDAO {
 
     @Override
     public Vendedor findById(Integer id) throws DbException {
+
         PreparedStatement st = null;
         ResultSet rs = null;
 
@@ -253,4 +254,9 @@ public class VendedorDAO_JDBC implements VendedorDAO {
         }
 
     }
+
+    public void closeConnection(){
+        c.fecharConexao();
+    }
+
 }
